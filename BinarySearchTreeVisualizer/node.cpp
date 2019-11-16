@@ -21,12 +21,12 @@ bool Node::operator==(const Node &node){
 }
 bool Node::operator!=(const Node &node){return !(*this==node);}
 
-void Node::insert(Node *node){
-    if(node==nullptr) return;
+bool Node::insert(Node *node){
+    if(node==nullptr) return false;
 
     if(exists(node)){
         qDebug() << node->num << "is already exists.";
-        return;
+        return false;
     }
 
     if(node->num < this->num){
@@ -43,6 +43,7 @@ void Node::insert(Node *node){
         }else
             this->right->insert(node);
     }
+    return true;
 }
 
 void Node::print(){

@@ -41,12 +41,14 @@ private slots:
 
     void on_actionSave_triggered();
 
+    void on_insertNodePushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QMenu *itemMenu;
     GraphicsScene *scene;
     QGraphicsView *view;
-
+    BinarySearchTree* tree;
     QList<int> nums;
 };
 

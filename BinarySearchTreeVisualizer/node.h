@@ -14,7 +14,7 @@ public:
     Node(int num);
     bool operator==(const Node &node);
     bool operator!=(const Node &node);
-    void insert(Node *node);
+    bool insert(Node *node);
     int  calcHeight();
     void checkEqual(Node *node, bool &isEqual);
     bool isEqual(Node *node);

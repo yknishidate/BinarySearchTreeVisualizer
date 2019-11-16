@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     int fontWidth = QFontMetrics(ui->console->currentCharFormat().font()).averageCharWidth();
     ui->console->setTabStopWidth(4*fontWidth);
 
+    tree = nullptr;
+
 }
 
 MainWindow::~MainWindow()
@@ -41,7 +43,7 @@ void MainWindow::on_generateTreePushButton_clicked()
         if(strList[i] != "") nums.append(strList[i].toInt());
 
 
-    BinarySearchTree* tree = new BinarySearchTree(nums);
+    tree = new BinarySearchTree(nums);
     scene->drawTree(tree);
 
 //    int treeRectSize = qMax(scene->getGraphWidth(tree), scene->getGraphHeight(tree));
@@ -62,6 +64,9 @@ void MainWindow::on_clearPushButton_clicked()
 {
     delete(view);
     delete(scene);
+    delete(tree);
+    nums.clear();
+
     scene = new GraphicsScene(itemMenu, this);
     view = new QGraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
@@ -79,4 +84,30 @@ void MainWindow::on_actionSave_triggered()
     if(fileName=="") return;
     pixMap.save(fileName);
     printConsole("Saved", true);
+}
+
+void MainWindow::on_insertNodePushButton_clicked()
+{
+//    tree->root->circle->moveBy(10, 10);
+
+    int number = ui->spinBox->value();
+
+    if(tree!=nullptr){
+        if(tree->root->insert(new Node(number)) == false){
+            printConsole(number);
+            printConsole(" already exists", true);
+            return;
+        }
+        nums.append(number);
+    }
+    else{
+        nums.append(number);
+        tree = new BinarySearchTree(nums);
+    }
+    scene->clear();
+    scene->drawTree(tree);
+    view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+
+    printConsole("Inserted: ");
+    printConsole(number, true);
 }
