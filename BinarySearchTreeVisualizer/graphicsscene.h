@@ -30,12 +30,12 @@ public:
     int getGraphHeight(BinarySearchTree *tree);
 
 private:
-    std::vector<QGraphicsEllipseItem*> nodes;
     int lineWidth;
     int circleDiameter;
     int stepHeight = 150;
     QPen pen;
     QFont font;
+    QBrush brush;
 };
 
 #endif // GRAPHICSSCENE_H

@@ -7,7 +7,9 @@ GraphicsScene::GraphicsScene(QMenu *itemMenu, QObject *parent)
     lineWidth = 4;
     circleDiameter = 100;
     pen = QPen(Qt::black, lineWidth);
-    font = QFont("Segoe UI", 46);
+    brush = QBrush(Qt::black);
+//    font = QFont("Segoe UI", 47);
+    font = QFont("Arial", 60);
 }
 
 void GraphicsScene::addNode(Node *node)
