@@ -18,26 +18,17 @@ bool Node::operator==(const Node &node){
         r = (right==nullptr && node.right==nullptr);
 
     return t && l && r;
-
-//    if(left==nullptr && node.left==nullptr)
-//        l = true;
-//    else if(left!=nullptr && node.left!=nullptr)
-//        l = (left->num == node.left->num);
-//    else
-//        l = false;
-
-//    if(right==nullptr && node.right==nullptr)
-//        r = true;
-//    else if(right!=nullptr && node.right!=nullptr)
-//        r = (right->num == node.right->num);
-//    else
-//        r = false;
-
-//    return (t && l) && r;
 }
 bool Node::operator!=(const Node &node){return !(*this==node);}
 
 void Node::insert(Node *node){
+    if(node==nullptr) return;
+
+    if(exists(node)){
+        qDebug() << node->num << "is already exists.";
+        return;
+    }
+
     if(node->num < this->num){
         if(this->left == nullptr){
             this->left = node;
@@ -64,27 +55,46 @@ void Node::print(){
 
 int Node::calcHeight(){
     // 葉のときに"0"になるように"-1"
-    return 1 + std::max(left==nullptr ? -1 : left->calcHeight(),
-                        right==nullptr? -1 : right->calcHeight());
+    return 1 + qMax(left==nullptr ? -1 : left->calcHeight(),
+                    right==nullptr? -1 : right->calcHeight());
 }
 
-void Node::checkEqual(Node *node, bool &isEqual){
-    isEqual = isEqual && (*this == *node);
+bool Node::isEqual(Node *node)
+{
+    if(node==nullptr) return false;
+    bool t=(*this == *node), l=true, r=true;
+
+    // Left
     if(this->left!=nullptr && node->left!=nullptr)
-        left->checkEqual(node->left, isEqual);
-    if((this->left==nullptr) ^ (node->left==nullptr)) isEqual = false;
+        l = left->isEqual(node->left); // 再帰
+    else
+        l = ((this->left==nullptr) && (node->left==nullptr)); //両方とも左の子がないならtrue
 
-    if(this->right!= nullptr && node->right!= nullptr)
-        right->checkEqual(node->right, isEqual);
-    if((this->left==nullptr) ^ (node->left==nullptr)) isEqual = false;
+    // Right
+    if(this->right!=nullptr && node->right!=nullptr)
+        r = right->isEqual(node->right);
+    else
+        r = ((this->right==nullptr) && (node->right==nullptr));  //両方とも右の子がないならtrue
+
+    return t && l && r;
 }
 
-void Node::checkAVL(bool &isAVL){
-    // 参照渡しでbool値を直接書き換え
-    // 子が無ければ"0", 子を調べたら"+1"
+bool Node::isAVL()
+{
     int dif = abs(  (left ==nullptr ? 0 : 1+left->calcHeight())
-                    - (right==nullptr ? 0 : 1+right->calcHeight()) );
-    isAVL = (dif <= 1) && isAVL;
-    if(this->left != nullptr)   left->checkAVL(isAVL);
-    if(this->right != nullptr)  right->checkAVL(isAVL);
+                   -(right==nullptr ? 0 : 1+right->calcHeight()) );
+    bool t=(dif<=1), l=true, r=true;
+    if(this->left != nullptr)   left->isAVL();
+    if(this->right != nullptr)  right->isAVL();
+
+    return t && l && r;
+}
+
+bool Node::exists(Node *node)
+{
+    if(node==nullptr) return false;
+    bool t=(this->num == node->num), l=false, r=false;
+    if(this->left != nullptr)   l = this->left->exists(node);
+    if(this->right != nullptr)  r = this->right->exists(node);
+    return t || l || r;
 }

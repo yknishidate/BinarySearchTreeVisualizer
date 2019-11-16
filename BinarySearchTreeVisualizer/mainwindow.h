@@ -39,11 +39,15 @@ private slots:
 
     void on_clearPushButton_clicked();
 
+    void on_actionSave_triggered();
+
 private:
     Ui::MainWindow *ui;
     QMenu *itemMenu;
     GraphicsScene *scene;
     QGraphicsView *view;
+
+    QList<int> nums;
 };
 
 #endif // MAINWINDOW_H

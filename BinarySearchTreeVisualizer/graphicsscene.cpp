@@ -57,11 +57,9 @@ void GraphicsScene::addEdge(Node *node)
 
 void GraphicsScene::drawTree(BinarySearchTree *tree)
 {
-    int space = (circleDiameter*1.1) * pow(2,tree->height()-1);
-//    int totalW = circleDiameter*1.1;
-//    for(int i=0; i<tree->height(); i++){
-//        totalW *=
-//    }
+    int height = tree->height();
+    int space = (circleDiameter*1.1) * pow(2,height-1);
+
     drawNode(tree->getRoot(), space);
 }
 
@@ -70,11 +68,24 @@ void GraphicsScene::drawNode(Node *node, int space)
     addNode(node);
     addEdge(node);
     if(node->left != nullptr){
-        node->left->position = QVector2D(node->position.x()-space/2, node->position.y()+150);
+        node->left->position = QVector2D(node->position.x()-space/2, node->position.y()+stepHeight);
         drawNode(node->left, space/2);
     }
     if(node->right != nullptr){
-        node->right->position = QVector2D(node->position.x()+space/2, node->position.y()+150);
+        node->right->position = QVector2D(node->position.x()+space/2, node->position.y()+stepHeight);
         drawNode(node->right, space/2);
     }
+}
+
+int GraphicsScene::getGraphHeight(BinarySearchTree *tree)
+{
+    return stepHeight*tree->height() + circleDiameter;
+}
+
+int GraphicsScene::getGraphWidth(BinarySearchTree *tree)
+{
+    int graphicsWidth = 0;
+    for(int i=-1; i<=tree->height()-2; i++)
+        graphicsWidth += (circleDiameter*1.1) * pow(2, i);
+    return 2*graphicsWidth + circleDiameter;
 }

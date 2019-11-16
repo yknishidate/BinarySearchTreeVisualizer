@@ -26,11 +26,14 @@ public:
     void addEdge(Node *node);
     void drawTree(BinarySearchTree *tree);
     void drawNode(Node *node, int space);
+    int getGraphWidth(BinarySearchTree *tree);
+    int getGraphHeight(BinarySearchTree *tree);
 
 private:
     std::vector<QGraphicsEllipseItem*> nodes;
     int lineWidth;
     int circleDiameter;
+    int stepHeight = 150;
     QPen pen;
     QFont font;
 };

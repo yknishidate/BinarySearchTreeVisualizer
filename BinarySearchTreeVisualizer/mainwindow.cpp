@@ -32,19 +32,16 @@ MainWindow::~MainWindow()
 void MainWindow::on_generateTreePushButton_clicked()
 {
     scene->clear();
-
+    nums.clear();
+    printConsole(ui->lineEdit->text(), true);
     // Process Sequence
     QStringList strList = ui->lineEdit->text().split(" ");
-    QList<int> nums;
     for (int i=0; i<strList.size(); i++)
-        nums.append(strList[i].toInt());
+        if(strList[i] != "") nums.append(strList[i].toInt());
 
     BinarySearchTree* tree = new BinarySearchTree(nums);
-    tree->print(); // qDebug
     scene->drawTree(tree);
-//    int width = 200, height = 200;
-//    view->setFixedSize(width+2*view->frameWidth(), height+2*view->frameWidth());
-//    view->scale(0.5, 0.5);
+    view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
 }
 
 template<class T>
@@ -56,4 +53,12 @@ void MainWindow::printConsole(T arg, bool br)
 void MainWindow::on_clearPushButton_clicked()
 {
     scene->clear();
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    QPixmap pixMap = view->grab();
+    QString filter = "Image (*.png)";
+    QString fileName = QFileDialog::getSaveFileName(this, "", "Untitled.png", tr("Images (*.png)"));
+    pixMap.save(fileName);
 }
