@@ -50,6 +50,7 @@ private:
     QGraphicsView *view;
     BinarySearchTree* tree;
     QList<int> nums;
+    QTimer *timer;
 };
 
 #endif // MAINWINDOW_H

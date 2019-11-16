@@ -33,6 +33,9 @@ public:
     QGraphicsEllipseItem *circle;
     QGraphicsTextItem *number;
 
+public slots:
+    void move();
+
 };
 
 #endif // NODE_H

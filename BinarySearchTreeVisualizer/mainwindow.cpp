@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
     setWindowTitle(tr("BinarySearchTree Visualizer"));
     setUnifiedTitleAndToolBarOnMac(true);
@@ -64,7 +65,7 @@ void MainWindow::on_clearPushButton_clicked()
 {
     delete(view);
     delete(scene);
-    delete(tree);
+    delete(tree); tree = nullptr;
     nums.clear();
 
     scene = new GraphicsScene(itemMenu, this);
@@ -73,6 +74,7 @@ void MainWindow::on_clearPushButton_clicked()
     view->setStyleSheet("QGraphicsView { background-color : #ffffff; }");
     view->setMinimumSize(400, 400);
     ui->gridLayout->addWidget(view);
+
     printConsole("Cleared", true);
 }
 
@@ -88,10 +90,13 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_insertNodePushButton_clicked()
 {
-//    tree->root->circle->moveBy(10, 10);
+    ///// Animation /////
+//    timer = new QTimer(this);
+//    connect(timer, SIGNAL(timeout()), this, SLOT(processOneThing()));
+//    timer->start();
+    ////////////////////
 
     int number = ui->spinBox->value();
-
     if(tree!=nullptr){
         if(tree->root->insert(new Node(number)) == false){
             printConsole(number);
