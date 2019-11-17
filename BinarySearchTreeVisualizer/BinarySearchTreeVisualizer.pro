@@ -37,7 +37,8 @@ HEADERS += \
         console.h \
         graphicsscene.h \
         mainwindow.h \
-        node.h
+        node.h \
+        util.h
 
 FORMS += \
         mainwindow.ui

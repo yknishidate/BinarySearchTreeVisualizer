@@ -33,6 +33,7 @@ public:
     ~MainWindow();
 
     template <class T> void printConsole(T arg, bool br = false);
+    void clearAllData();
 
 private slots:
     void on_generateTreePushButton_clicked();
@@ -49,6 +50,7 @@ private:
     GraphicsScene *scene;
     QGraphicsView *view;
     BinarySearchTree* tree;
+    QRectF firstRect;
     QList<int> nums;
     QTimer *timer;
 };

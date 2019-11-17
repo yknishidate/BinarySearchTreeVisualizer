@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>924</width>
-    <height>532</height>
+    <width>1000</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="font">
@@ -173,6 +173,19 @@
        </layout>
       </item>
       <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="Console" name="console">
         <property name="font">
          <font>
@@ -194,7 +207,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>924</width>
+     <width>1000</width>
      <height>20</height>
     </rect>
    </property>

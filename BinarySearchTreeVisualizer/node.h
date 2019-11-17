@@ -16,11 +16,8 @@ public:
     bool operator!=(const Node &node);
     bool insert(Node *node);
     int  calcHeight();
-    void checkEqual(Node *node, bool &isEqual);
     bool isEqual(Node *node);
-    void checkAVL(bool &isAVL);
     bool isAVL();
-    void checkExists(Node *node, bool &exists);
     bool exists(Node *node);
 
     // for Debug

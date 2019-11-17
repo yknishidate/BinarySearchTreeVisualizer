@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->console->setTabStopWidth(4*fontWidth);
 
     tree = nullptr;
-
+    firstRect = scene->sceneRect();
 }
 
 MainWindow::~MainWindow()
@@ -32,56 +32,42 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
 void MainWindow::on_generateTreePushButton_clicked()
 {
     scene->clear();
     nums.clear();
+
+    // Get Sequence
     printConsole("Number Sequence: ");
-    printConsole(ui->lineEdit->text(), true);
+    QString str = ui->lineEdit->text();
+    if(str==""){
+        printConsole("Empty", true);
+        return;
+    }
+    printConsole(str, true);
+
     // Process Sequence
-    QStringList strList = ui->lineEdit->text().split(" ");
+    QStringList strList = str.split(" ");
     for (int i=0; i<strList.size(); i++)
         if(strList[i] != "") nums.append(strList[i].toInt());
 
-
+    delete(tree);
     tree = new BinarySearchTree(nums);
     scene->drawTree(tree);
-
-//    int treeRectSize = qMax(scene->getGraphWidth(tree), scene->getGraphHeight(tree));
-//    int width = scene->getGraphWidth(tree);
-//    scene->setSceneRect(-2, -2, +width/2 - 50 +4, scene->getGraphHeight(tree)+4);
 
     view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
     qDebug() << scene->sceneRect();
 }
 
-template<class T>
-void MainWindow::printConsole(T arg, bool br)
-{
-    ui->console->printConsole(arg, br);
-}
-
 void MainWindow::on_clearPushButton_clicked()
 {
-    delete(view);
-    delete(scene);
-    delete(tree); tree = nullptr;
-    nums.clear();
-
-    scene = new GraphicsScene(itemMenu, this);
-    view = new QGraphicsView(scene);
-    view->setRenderHint(QPainter::Antialiasing);
-    view->setStyleSheet("QGraphicsView { background-color : #ffffff; }");
-    view->setMinimumSize(400, 400);
-    ui->gridLayout->addWidget(view);
-
-    printConsole("Cleared", true);
+    clearAllData();
 }
 
 void MainWindow::on_actionSave_triggered()
 {
     QPixmap pixMap = view->grab();
-    QString filter = "Image (*.png)";
     QString fileName = QFileDialog::getSaveFileName(this, "", "Untitled.png", tr("Images (*.png)"));
     if(fileName=="") return;
     pixMap.save(fileName);
@@ -115,4 +101,28 @@ void MainWindow::on_insertNodePushButton_clicked()
 
     printConsole("Inserted: ");
     printConsole(number, true);
+}
+
+void MainWindow::clearAllData()
+{
+    delete(view);
+    delete(scene);
+    delete(tree); tree = nullptr;
+    nums.clear();
+
+    scene = new GraphicsScene(itemMenu, this);
+    view = new QGraphicsView(scene);
+    view->setRenderHint(QPainter::Antialiasing);
+    view->setStyleSheet("QGraphicsView { background-color : #ffffff; }");
+    view->setMinimumSize(400, 400);
+    ui->gridLayout->addWidget(view);
+
+    printConsole("Cleared", true);
+}
+
+
+template<class T>
+void MainWindow::printConsole(T arg, bool br)
+{
+    ui->console->printConsole(arg, br);
 }
