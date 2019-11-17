@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include "node.h"
 #include "binarysearchtree.h"
+//#include "graphicscircle.h"
 
 QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;

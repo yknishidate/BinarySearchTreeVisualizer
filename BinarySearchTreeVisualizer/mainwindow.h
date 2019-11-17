@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "graphicsscene.h"
 #include "binarysearchtree.h"
+#include "graphicsview.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -46,11 +47,14 @@ private slots:
 
     void on_insertNodePushButton_clicked();
 
+    void deletePressed(bool arg);
+
 private:
     Ui::MainWindow *ui;
     QMenu *itemMenu;
     GraphicsScene *scene;
-    QGraphicsView *view;
+//    QGraphicsView *view;
+    GraphicsView *view;
     BinarySearchTree* tree;
     QRectF firstRect;
     QList<int> nums;

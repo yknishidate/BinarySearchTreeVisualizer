@@ -27,7 +27,9 @@ CONFIG += c++11
 SOURCES += \
         binarysearchtree.cpp \
         console.cpp \
+        graphicscircle.cpp \
         graphicsscene.cpp \
+        graphicsview.cpp \
         main.cpp \
         mainwindow.cpp \
         node.cpp
@@ -35,7 +37,9 @@ SOURCES += \
 HEADERS += \
         binarysearchtree.h \
         console.h \
+        graphicscircle.h \
         graphicsscene.h \
+        graphicsview.h \
         mainwindow.h \
         node.h \
         util.h

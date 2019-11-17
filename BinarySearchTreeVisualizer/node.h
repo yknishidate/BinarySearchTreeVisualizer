@@ -4,6 +4,7 @@
 #include <QtDebug>
 #include <QVector2D>
 #include <QGraphicsItem>
+#include "graphicscircle.h"
 
 class Node
 {
@@ -27,8 +28,12 @@ public:
     Node *parent;
     QVector2D position;
     QGraphicsLineItem *edge;
-    QGraphicsEllipseItem *circle;
+//    QGraphicsEllipseItem *circle;
+    GraphicsCircle *circle;
     QGraphicsTextItem *number;
+
+    // for Other Tree Type
+//    bool insertCompleteBST(Node *node);
 
 public slots:
     void move();

@@ -16,10 +16,12 @@ GraphicsScene::GraphicsScene(QMenu *itemMenu, QObject *parent)
 void GraphicsScene::addNode(Node *node)
 {
     // Circle
-    node->circle = new QGraphicsEllipseItem(0, 0, circleDiameter, circleDiameter);
+//    node->circle = new QGraphicsEllipseItem(0, 0, circleDiameter, circleDiameter);
+    node->circle = new GraphicsCircle(0, 0, circleDiameter, circleDiameter);
     node->circle->setPos(node->position.x(), node->position.y());
     node->circle->setPen(pen);
     node->circle->setFlags(QGraphicsItem::ItemIsSelectable);
+    node->circle->parent = node;
 
     // Number
     node->number = new QGraphicsTextItem(QString::number(node->num), node->circle);
@@ -38,8 +40,8 @@ void GraphicsScene::addNode(Node *node)
     cursor.mergeBlockFormat(format);
     cursor.clearSelection();
     node->number->setTextCursor(cursor);
-    qDebug() << "CircleRect" << node->circle->boundingRect();
-    qDebug() << "NumberRect" << node->number->boundingRect();
+//    qDebug() << "CircleRect" << node->circle->boundingRect();
+//    qDebug() << "NumberRect" << node->number->boundingRect();
 
     addItem(node->circle);
 }

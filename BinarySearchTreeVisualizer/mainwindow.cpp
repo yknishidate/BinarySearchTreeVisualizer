@@ -13,18 +13,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Setup GraphicsView
     scene = new GraphicsScene(itemMenu, this);
-    view = new QGraphicsView(scene);
+//    view = new QGraphicsView(scene);
+    view = new GraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
     view->setStyleSheet("QGraphicsView { background-color : #ffffff; }");
     view->setMinimumSize(400, 400);
     ui->gridLayout->addWidget(view);
 
     // Setup TextEdit
-    int fontWidth = QFontMetrics(ui->console->currentCharFormat().font()).averageCharWidth();
-    ui->console->setTabStopWidth(4*fontWidth);
+//    int fontWidth = QFontMetrics(ui->console->currentCharFormat().font()).averageCharWidth();
+//    ui->console->setTabStopWidth(4*fontWidth);
 
     tree = nullptr;
     firstRect = scene->sceneRect();
+
+    // Connect
+    connect(view, SIGNAL(deletePressed(bool)), this, SLOT(deletePressed(bool)));
 }
 
 MainWindow::~MainWindow()
@@ -67,7 +71,7 @@ void MainWindow::on_generateTreePushButton_clicked()
     scene->drawTree(tree);
 
     view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
-    qDebug() << scene->sceneRect();
+//    qDebug() << scene->sceneRect();
 }
 
 void MainWindow::on_clearPushButton_clicked()
@@ -90,6 +94,10 @@ void MainWindow::on_insertNodePushButton_clicked()
 //    timer = new QTimer(this);
 //    connect(timer, SIGNAL(timeout()), this, SLOT(processOneThing()));
 //    timer->start();
+
+
+    qDebug() << "Selected Item: " << scene->selectedItems();
+
     ////////////////////
 
     int number = ui->spinBox->value();
@@ -113,6 +121,11 @@ void MainWindow::on_insertNodePushButton_clicked()
     printConsole(number, true);
 }
 
+void MainWindow::deletePressed(bool arg)
+{
+    qDebug() << "Delete Node(Main)";
+}
+
 void MainWindow::clearAllData()
 {
     delete(view);
@@ -121,7 +134,8 @@ void MainWindow::clearAllData()
     nums.clear();
 
     scene = new GraphicsScene(itemMenu, this);
-    view = new QGraphicsView(scene);
+//    view = new QGraphicsView(scene);
+    view = new GraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
     view->setStyleSheet("QGraphicsView { background-color : #ffffff; }");
     view->setMinimumSize(400, 400);
@@ -135,8 +149,6 @@ bool MainWindow::processNumberSequence()
     // Process Sequence
     QString str = ui->lineEdit->text();
     QStringList strList = str.split(" ");
-
-
 
     for (int i=0; i<strList.size(); i++){
         bool ok;
