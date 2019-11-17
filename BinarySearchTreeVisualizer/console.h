@@ -10,6 +10,7 @@ public:
     void printConsole(QString arg, bool br = false);
     void printConsole(int arg, bool br = false);
     void printConsole(float arg, bool br = false);
+    void printError(QString arg);
 };
 
 #endif // CONSOLE_H

@@ -9,9 +9,8 @@ GraphicsScene::GraphicsScene(QMenu *itemMenu, QObject *parent)
     circleDiameter = 100;
     pen = QPen(Qt::black, lineWidth);
     brush = QBrush(Qt::black);
-//    font = QFont("Segoe UI", 47);
-//    font = QFont("Arial", 60);
-    font = QFont("Acumin Pro", 50);
+    font = QFont("Segoe UI", 50);
+//    font = QFont("Acumin Pro", 50);
 }
 
 void GraphicsScene::addNode(Node *node)
@@ -25,16 +24,13 @@ void GraphicsScene::addNode(Node *node)
     // Number
     node->number = new QGraphicsTextItem(QString::number(node->num), node->circle);
     node->number->setDefaultTextColor(Qt::black);
-//    node->number->setFlags(QGraphicsItem::ItemIsSelectable);
     int numDig = getNumDigits(node->num);
-    if(numDig <= 2)
-        node->number->setFont(font);
-    else
-        node->number->setFont(QFont("Acumin Pro", 50*2/numDig));
+    if(numDig<=2) node->number->setFont(font);
+    else          node->number->setFont(QFont("Acumin Pro", 50*2/numDig));
 
     // Align Center
     node->number->setTextWidth(circleDiameter);
-    node->number->moveBy(0, (circleDiameter - node->number->boundingRect().height())/2 - 2);
+    node->number->moveBy(0, (circleDiameter-node->number->boundingRect().height())/2 - 2);
     QTextBlockFormat format;
     format.setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
     QTextCursor cursor = node->number->textCursor();
@@ -42,6 +38,8 @@ void GraphicsScene::addNode(Node *node)
     cursor.mergeBlockFormat(format);
     cursor.clearSelection();
     node->number->setTextCursor(cursor);
+    qDebug() << "CircleRect" << node->circle->boundingRect();
+    qDebug() << "NumberRect" << node->number->boundingRect();
 
     addItem(node->circle);
 }

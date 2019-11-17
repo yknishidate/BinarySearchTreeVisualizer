@@ -33,7 +33,9 @@ public:
     ~MainWindow();
 
     template <class T> void printConsole(T arg, bool br = false);
+    void printError(QString arg);
     void clearAllData();
+    bool processNumberSequence();
 
 private slots:
     void on_generateTreePushButton_clicked();

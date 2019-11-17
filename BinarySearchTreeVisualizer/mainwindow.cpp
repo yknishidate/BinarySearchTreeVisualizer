@@ -33,24 +33,34 @@ MainWindow::~MainWindow()
 }
 
 
+
+
 void MainWindow::on_generateTreePushButton_clicked()
 {
     scene->clear();
     nums.clear();
 
-    // Get Sequence
-    printConsole("Number Sequence: ");
-    QString str = ui->lineEdit->text();
-    if(str==""){
-        printConsole("Empty", true);
-        return;
-    }
-    printConsole(str, true);
+    if(!processNumberSequence()) return;
+//    // Process Sequence
+//    QString str = ui->lineEdit->text();
+//    QStringList strList = str.split(" ");
+//    for (int i=0; i<strList.size(); i++){
+//        bool ok;
+//        int num = strList[i].toInt(&ok);
+//        if(ok)
+//            nums.append(num);
+//        else {
+//            printError("ERROR: Do not enter alphabets or symbols");
+//            return;
+//        }
+//    }
 
-    // Process Sequence
-    QStringList strList = str.split(" ");
-    for (int i=0; i<strList.size(); i++)
-        if(strList[i] != "") nums.append(strList[i].toInt());
+//    if(nums.empty()){
+//        printError("ERROR: Number Sequence is empty");
+//        return;
+//    }
+//    printConsole("Number Sequence: ");
+//    printConsole(str, true);
 
     delete(tree);
     tree = new BinarySearchTree(nums);
@@ -85,8 +95,8 @@ void MainWindow::on_insertNodePushButton_clicked()
     int number = ui->spinBox->value();
     if(tree!=nullptr){
         if(tree->root->insert(new Node(number)) == false){
-            printConsole(number);
-            printConsole(" already exists", true);
+//            printConsole(number);
+            printError("ERROR: Already exists");
             return;
         }
         nums.append(number);
@@ -120,9 +130,43 @@ void MainWindow::clearAllData()
     printConsole("Cleared", true);
 }
 
+bool MainWindow::processNumberSequence()
+{
+    // Process Sequence
+    QString str = ui->lineEdit->text();
+    QStringList strList = str.split(" ");
+
+
+
+    for (int i=0; i<strList.size(); i++){
+        bool ok;
+        int num = strList[i].toInt(&ok);
+        if(ok)
+            nums.append(num);
+        else {
+            printError("ERROR: Please enter numbers or spaces");
+            return false;
+        }
+    }
+
+    if(nums.empty()){
+        printError("ERROR: Number Sequence is empty");
+        return false;
+    }
+
+    printConsole("Number Sequence: ");
+    printConsole(str, true);
+    return true;
+}
+
 
 template<class T>
 void MainWindow::printConsole(T arg, bool br)
 {
     ui->console->printConsole(arg, br);
+}
+
+void MainWindow::printError(QString arg)
+{
+    ui->console->printError(arg);
 }

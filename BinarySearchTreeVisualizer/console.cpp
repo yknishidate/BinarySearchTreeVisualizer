@@ -26,3 +26,10 @@ void Console::printConsole(float arg, bool br)
     insertPlainText(QString::number(arg));
     if(br) insertPlainText("\n");
 }
+void Console::printError(QString arg)
+{
+    setTextColor("#ff4444");
+    append(arg);
+    setTextColor(Qt::white);
+    insertPlainText("\n");
+}
