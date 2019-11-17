@@ -25,6 +25,7 @@ void GraphicsScene::addNode(Node *node)
     // Number
     node->number = new QGraphicsTextItem(QString::number(node->num), node->circle);
     node->number->setDefaultTextColor(Qt::black);
+//    node->number->setFlags(QGraphicsItem::ItemIsSelectable);
     int numDig = getNumDigits(node->num);
     if(numDig <= 2)
         node->number->setFont(font);
@@ -33,7 +34,7 @@ void GraphicsScene::addNode(Node *node)
 
     // Align Center
     node->number->setTextWidth(circleDiameter);
-    node->number->moveBy(0, (circleDiameter-node->number->boundingRect().height())/2);
+    node->number->moveBy(0, (circleDiameter - node->number->boundingRect().height())/2 - 2);
     QTextBlockFormat format;
     format.setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
     QTextCursor cursor = node->number->textCursor();
