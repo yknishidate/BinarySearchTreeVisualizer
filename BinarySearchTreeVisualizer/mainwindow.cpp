@@ -123,7 +123,12 @@ void MainWindow::on_insertNodePushButton_clicked()
 
 void MainWindow::deletePressed(bool arg)
 {
-    qDebug() << "Delete Node(Main)";
+    // 派生クラスのポインタにキャスト
+    GraphicsCircle *circle = dynamic_cast<GraphicsCircle*>( scene->selectedItems()[0] );
+    qDebug() << "Delete Node(Main)" << circle->parent->num;
+
+    if(circle && circle->parent)
+        qDebug() << "getMax: " << circle->parent->getMax()->num;
 }
 
 void MainWindow::clearAllData()

@@ -46,6 +46,11 @@ bool Node::insert(Node *node){
     return true;
 }
 
+bool Node::remove(Node *node)
+{
+    return true;
+}
+
 void Node::print(){
     qDebug()    <<  this->num << " -> ( "
                 << (this->left==nullptr  ? "_" : QString::number(this->left->num))  << ", "
@@ -98,4 +103,10 @@ bool Node::exists(Node *node)
     if(this->left != nullptr)   l = this->left->exists(node);
     if(this->right != nullptr)  r = this->right->exists(node);
     return t || l || r;
+}
+
+Node *Node::getMax()
+{
+    if(this->right==nullptr) return this;
+    return this->right->getMax();
 }
