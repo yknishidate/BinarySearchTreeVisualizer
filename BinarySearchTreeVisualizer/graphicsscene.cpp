@@ -9,14 +9,13 @@ GraphicsScene::GraphicsScene(QMenu *itemMenu, QObject *parent)
     circleDiameter = 100;
     pen = QPen(Qt::black, lineWidth);
     brush = QBrush(Qt::black);
-    font = QFont("Segoe UI", 50);
-//    font = QFont("Acumin Pro", 50);
+//    font = QFont("Segoe UI", 50);
+    font = QFont("Acumin Pro", 50);
 }
 
 void GraphicsScene::addNode(Node *node)
 {
     // Circle
-//    node->circle = new QGraphicsEllipseItem(0, 0, circleDiameter, circleDiameter);
     node->circle = new GraphicsCircle(0, 0, circleDiameter, circleDiameter);
     node->circle->setPos(node->position.x(), node->position.y());
     node->circle->setPen(pen);
@@ -40,29 +39,68 @@ void GraphicsScene::addNode(Node *node)
     cursor.mergeBlockFormat(format);
     cursor.clearSelection();
     node->number->setTextCursor(cursor);
-//    qDebug() << "CircleRect" << node->circle->boundingRect();
-//    qDebug() << "NumberRect" << node->number->boundingRect();
 
     addItem(node->circle);
 }
 
-void GraphicsScene::addEdge(Node *node)
+void GraphicsScene::addLeftEdge(Node *node)
 {
-    if(node->parent==nullptr) return;
-    QVector2D a((node->position.x()+circleDiameter/2), (node->position.y()+circleDiameter/2));
-    QVector2D b((node->parent->position.x()+circleDiameter/2), (node->parent->position.y()+circleDiameter/2));
+    if(node==nullptr || node->left==nullptr) return;
 
-    float dx = (node->parent->position.x()) - (node->position.x());
-    float dy = (node->parent->position.y()) - (node->position.y());
+    QVector2D a((node->position.x()+circleDiameter/2), (node->position.y()+circleDiameter/2));
+    QVector2D b((node->left->position.x()+circleDiameter/2), (node->left->position.y()+circleDiameter/2));
+
+    float dx = (node->left->position.x()) - (node->position.x());
+    float dy = (node->left->position.y()) - (node->position.y());
     QVector2D dir(dx, dy);
     dir.normalize();
 
     a += dir*circleDiameter/2;
     b -= dir*circleDiameter/2;
 
-    node->edge = new QGraphicsLineItem(a.x(), a.y(), b.x(), b.y());
-    node->edge->setPen(pen);
-    this->addItem(node->edge);
+    node->leftEdge = new QGraphicsLineItem(a.x(), a.y(), b.x(), b.y());
+    node->leftEdge->setPen(pen);
+    this->addItem(node->leftEdge);
+}
+
+void GraphicsScene::addRightEdge(Node *node)
+{
+    if(node==nullptr || node->right==nullptr) return;
+
+    QVector2D a((node->position.x()+circleDiameter/2), (node->position.y()+circleDiameter/2));
+    QVector2D b((node->right->position.x()+circleDiameter/2), (node->right->position.y()+circleDiameter/2));
+
+    float dx = (node->right->position.x()) - (node->position.x());
+    float dy = (node->right->position.y()) - (node->position.y());
+    QVector2D dir(dx, dy);
+    dir.normalize();
+
+    a += dir*circleDiameter/2;
+    b -= dir*circleDiameter/2;
+
+    node->rightEdge = new QGraphicsLineItem(a.x(), a.y(), b.x(), b.y());
+    node->rightEdge->setPen(pen);
+    this->addItem(node->rightEdge);
+}
+
+
+void GraphicsScene::addEdge(Node *node)
+{
+//    if(node->parent==nullptr) return;
+//    QVector2D a((node->position.x()+circleDiameter/2), (node->position.y()+circleDiameter/2));
+//    QVector2D b((node->parent->position.x()+circleDiameter/2), (node->parent->position.y()+circleDiameter/2));
+
+//    float dx = (node->parent->position.x()) - (node->position.x());
+//    float dy = (node->parent->position.y()) - (node->position.y());
+//    QVector2D dir(dx, dy);
+//    dir.normalize();
+
+//    a += dir*circleDiameter/2;
+//    b -= dir*circleDiameter/2;
+
+//    node->edge = new QGraphicsLineItem(a.x(), a.y(), b.x(), b.y());
+//    node->edge->setPen(pen);
+//    this->addItem(node->edge);
 }
 
 void GraphicsScene::drawTree(BinarySearchTree *tree)
@@ -76,14 +114,16 @@ void GraphicsScene::drawTree(BinarySearchTree *tree)
 void GraphicsScene::drawNode(Node *node, int space)
 {
     addNode(node);
-    addEdge(node);
+//    addEdge(node);
     if(node->left != nullptr){
         node->left->position = QVector2D(node->position.x()-space/2, node->position.y()+stepHeight);
         drawNode(node->left, space/2);
+        addLeftEdge(node);
     }
     if(node->right != nullptr){
         node->right->position = QVector2D(node->position.x()+space/2, node->position.y()+stepHeight);
         drawNode(node->right, space/2);
+        addRightEdge(node);
     }
 }
 

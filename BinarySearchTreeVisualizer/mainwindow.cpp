@@ -90,20 +90,9 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::on_insertNodePushButton_clicked()
 {
-    ///// Animation /////
-//    timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(processOneThing()));
-//    timer->start();
-
-
-    qDebug() << "Selected Item: " << scene->selectedItems();
-
-    ////////////////////
-
     int number = ui->spinBox->value();
     if(tree!=nullptr){
         if(tree->root->insert(new Node(number)) == false){
-//            printConsole(number);
             printError("ERROR: Already exists");
             return;
         }
@@ -127,8 +116,12 @@ void MainWindow::deletePressed(bool arg)
     GraphicsCircle *circle = dynamic_cast<GraphicsCircle*>( scene->selectedItems()[0] );
     qDebug() << "Delete Node(Main)" << circle->parent->num;
 
-    if(circle && circle->parent)
-        qDebug() << "getMax: " << circle->parent->getMax()->num;
+//    if(circle && circle->parent)
+//        qDebug() << "getMax: " << circle->parent->getMax()->num;
+    circle->parent->remove(circle->parent);
+
+    scene->clear();
+    scene->drawTree(tree);
 }
 
 void MainWindow::clearAllData()

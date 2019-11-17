@@ -27,9 +27,11 @@ public:
     void print();
 
     // for Graphics
-    Node *parent;
+//    Node *parent;
     QVector2D position;
     QGraphicsLineItem *edge;
+    QGraphicsLineItem *leftEdge;
+    QGraphicsLineItem *rightEdge;
 //    QGraphicsEllipseItem *circle;
     GraphicsCircle *circle;
     QGraphicsTextItem *number;

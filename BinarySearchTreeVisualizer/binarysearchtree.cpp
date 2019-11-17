@@ -12,9 +12,6 @@ int BinarySearchTree::height(){
 }
 
 bool BinarySearchTree::isAVL(){
-//    bool isAVL = true;
-//    root->checkAVL(isAVL);
-//    return isAVL;
     return root->isAVL();
 }
 
@@ -25,9 +22,6 @@ void BinarySearchTree::print()
 }
 
 bool BinarySearchTree::operator==(const BinarySearchTree &tree){
-//    bool isEqual = true;
-//    root->checkEqual(tree.root, isEqual);
-//    return isEqual;
     return root->isEqual(tree.root);
 }
 

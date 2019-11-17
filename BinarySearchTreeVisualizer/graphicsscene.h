@@ -24,6 +24,8 @@ class GraphicsScene : public QGraphicsScene
 public:
     explicit GraphicsScene(QMenu *itemMenu, QObject *parent = 0);
     void addNode(Node *node);
+    void addLeftEdge(Node *node);
+    void addRightEdge(Node *node);
     void addEdge(Node *node);
     void drawTree(BinarySearchTree *tree);
     void drawNode(Node *node, int space);

@@ -2,7 +2,7 @@
 
 Node::Node(int num){
     this->num = num;
-    this->left = this->right = this->parent = nullptr;
+    this->left = this->right = /*this->parent =*/ nullptr;
     position = QVector2D(0, 0);
 }
 
@@ -32,14 +32,14 @@ bool Node::insert(Node *node){
     if(node->num < this->num){
         if(this->left == nullptr){
             this->left = node;
-            node->parent = this;
+//            node->parent = this;
         }else
             this->left->insert(node);
     }
     else{
         if(this->right == nullptr){
             this->right = node;
-            node->parent = this;
+//            node->parent = this;
         }else
             this->right->insert(node);
     }
@@ -48,6 +48,12 @@ bool Node::insert(Node *node){
 
 bool Node::remove(Node *node)
 {
+    if(left==nullptr && right==nullptr){
+        qDebug() << "Removed: Leaf";
+        delete(this);
+        return true;
+    }
+    qDebug() << "Others:";
     return true;
 }
 
