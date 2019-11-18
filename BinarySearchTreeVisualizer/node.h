@@ -26,6 +26,7 @@ public:
 
     // Utility
     Node *getMax();
+    Node *getMaxParent();
     bool isLeaf();
     bool hasOneChild();
     bool hasTwoChild();

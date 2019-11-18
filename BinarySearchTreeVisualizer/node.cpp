@@ -59,7 +59,7 @@ bool Node::remove(Node *node)
             return true;
         }
         // 1 Child
-        if(left->hasOneChild()){
+        else if(left->hasOneChild()){
             if(left->left!=nullptr){
                 qDebug() << "RemoveNode(hasLeft) : " << left->num;
                 Node *tmp = left;
@@ -77,6 +77,30 @@ bool Node::remove(Node *node)
                 return true;
             }
         }
+        else{
+            Node *maxParent = left->getMaxParent();
+            Node *max = left->getMax();
+            qDebug() << "MaxNode:" << max->num;
+            qDebug() << "MaxPare:" << maxParent->num;
+            Node *tmpL = this->left->left;
+            Node *tmpR = this->left->right;
+            // Remove Max
+            if(maxParent->right!=nullptr)
+                maxParent->right = nullptr;
+            // Replace with Max
+            this->left = max;
+            // Setup Children
+            if(node==maxParent){
+                this->left->right = nullptr;
+                this->left->left = tmpL;
+            }else{
+                this->left->right = tmpR;
+                this->left->left  = tmpL;
+            }
+            delete(node);
+            node = nullptr;
+            return true;
+        }
         qDebug() << "Others: " << left->num;
         return false;
     }
@@ -90,7 +114,7 @@ bool Node::remove(Node *node)
             rightEdge = nullptr;
             return true;
         }
-        if(right->hasOneChild()){
+        else if(right->hasOneChild()){
             if(right->left!=nullptr){
                 qDebug() << "RemoveNode(hasRight): " << right->num;
                 Node *tmp = right;
@@ -108,7 +132,30 @@ bool Node::remove(Node *node)
                 return true;
             }
         }
-        qDebug() << "Others: " << right->num;
+        else{
+            Node *maxParent = right->getMaxParent();
+            Node *max = right->getMax();
+            qDebug() << "MaxNode:" << max->num;
+            qDebug() << "MaxPare:" << maxParent->num;
+            Node *tmpL = this->right->left;
+            Node *tmpR = this->right->right;
+            // Remove Max
+            if(maxParent->right!=nullptr)
+                maxParent->right = nullptr;
+            // Replace with Max
+            this->right = max;
+            // Setup Children
+            if(node==maxParent){
+                this->right->right = nullptr;
+                this->right->left = tmpL;
+            }else{
+                this->right->right = tmpR;
+                this->right->left  = tmpL;
+            }
+            delete(node);
+            node = nullptr;
+            return true;
+        }
         return false;
     }
 
@@ -179,6 +226,12 @@ Node *Node::getMax()
 {
     if(this->right==nullptr) return this;
     return this->right->getMax();
+}
+
+Node *Node::getMaxParent()
+{
+    if(this->right==nullptr || this->right->right==nullptr) return this;
+    return this->right->getMaxParent();
 }
 
 bool Node::isLeaf()
