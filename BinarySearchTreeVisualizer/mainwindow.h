@@ -54,9 +54,7 @@ private:
     GraphicsScene *scene;
     GraphicsView *view;
     BinarySearchTree* tree;
-    QRectF firstRect;
     QList<int> nums;
-    QTimer *timer;
 };
 
 #endif // MAINWINDOW_H

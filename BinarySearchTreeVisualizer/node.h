@@ -42,9 +42,6 @@ public:
     GraphicsCircle *circle;
     QGraphicsTextItem *number;
 
-    // for Other Tree Type
-//    bool insertCompleteBST(Node *node);
-
 public slots:
     void move();
 

@@ -8,5 +8,4 @@ int getNumDigits(int num){
     return std::to_string(num).length();
 }
 
-
 #endif // UTIL_H

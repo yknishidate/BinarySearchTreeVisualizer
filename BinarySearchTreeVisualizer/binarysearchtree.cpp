@@ -18,7 +18,6 @@ bool BinarySearchTree::isAVL(){
 
 void BinarySearchTree::print()
 {
-//    printVector(nums);
     root->print();
 }
 
@@ -38,49 +37,35 @@ bool BinarySearchTree::exists(const QList<BinarySearchTree *> uniqueTrees){
 
 bool BinarySearchTree::remove(Node *target)
 {
+    // Root
     if(root == target){
-        if(root->isLeaf()){
-            return false;
-        }
-        else if(root->hasOneChild()){
-            root = (root->left!=nullptr) ? root->left
-                                         : root->right;
-        }
-        else{
-            Node *maxParent = root->left->getMaxParent();
-            Node *max = root->left->getMax();
-            qDebug() << "MaxNode:" << max->num;
-            qDebug() << "MaxPare:" << maxParent->num;
-            Node *tmpL = root->left;
-            Node *tmpR = root->right;
-        }
+        return false;
+//        if(root->isLeaf()){
+//            return false;
+//        }
+//        else if(root->hasOneChild()){
+//            root = (root->left!=nullptr) ? root->left
+//                                         : root->right;
+//            return true;
+//        }
+//        else{
+//            Node *maxParent = root->left->getMaxParent();
+//            Node *max = root->left->getMax();
+
+//            qDebug() << "MaxNode:" << max->num;
+//            qDebug() << "MaxPare:" << maxParent->num;
+//            max->left  = root->left;
+//            max->right = root->right;
+//            // Remove Max
+//            if(maxParent->right!=nullptr)
+//                maxParent->right = nullptr;
+//            // Replace with Max
+//            root = max;
+//            delete(target);
+//            target = nullptr;
+//            return true;
+//        }
     }
 
     return root->remove(target);
-}
-
-bool BinarySearchTree::remove(Node *node, Node *target, Node *parent, bool left)
-{
-    if(node==nullptr || target==nullptr) return false;
-
-    if(node==target){
-        if(node->isLeaf()){
-            qDebug() << "RemoveLeaf: " << node->num;
-            delete(node);
-            node = nullptr;
-//            delete(target);
-            if(parent!=nullptr){
-                if(left) parent->left = nullptr;
-                else parent->right = nullptr;
-            }
-            return true;
-        }
-        qDebug() << "Others: " << node->num;
-        return true;
-    }
-
-    if(node->left!=nullptr)
-        return remove(node->left, target, node, true);
-    if(node->right!=nullptr)
-        return remove(node->right, target, node, false);
 }

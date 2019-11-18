@@ -9,7 +9,6 @@ GraphicsScene::GraphicsScene(QMenu *itemMenu, QObject *parent)
     circleDiameter = 100;
     pen = QPen(Qt::black, lineWidth);
     brush = QBrush(Qt::black);
-//    font = QFont("Segoe UI", 50);
     font = QFont("Acumin Pro", 50);
 }
 
@@ -84,26 +83,6 @@ void GraphicsScene::addRightEdge(Node *node)
     this->addItem(node->rightEdge);
 }
 
-
-void GraphicsScene::addEdge(Node *node)
-{
-//    if(node->parent==nullptr) return;
-//    QVector2D a((node->position.x()+circleDiameter/2), (node->position.y()+circleDiameter/2));
-//    QVector2D b((node->parent->position.x()+circleDiameter/2), (node->parent->position.y()+circleDiameter/2));
-
-//    float dx = (node->parent->position.x()) - (node->position.x());
-//    float dy = (node->parent->position.y()) - (node->position.y());
-//    QVector2D dir(dx, dy);
-//    dir.normalize();
-
-//    a += dir*circleDiameter/2;
-//    b -= dir*circleDiameter/2;
-
-//    node->edge = new QGraphicsLineItem(a.x(), a.y(), b.x(), b.y());
-//    node->edge->setPen(pen);
-//    this->addItem(node->edge);
-}
-
 void GraphicsScene::drawTree(BinarySearchTree *tree)
 {
     if(tree==nullptr) return;
@@ -118,7 +97,6 @@ void GraphicsScene::drawNode(Node *node, int space)
     if(node==nullptr) return;
 
     addNode(node);
-//    addEdge(node);
     if(node->left != nullptr){
         node->left->position = QVector2D(node->position.x()-space/2, node->position.y()+stepHeight);
         drawNode(node->left, space/2);
