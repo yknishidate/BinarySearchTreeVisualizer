@@ -2,7 +2,7 @@
 
 Node::Node(int num){
     this->num = num;
-    this->left = this->right = /*this->parent =*/ nullptr;
+    this->left = this->right = nullptr;
     position = QVector2D(0, 0);
 }
 
@@ -32,14 +32,12 @@ bool Node::insert(Node *node){
     if(node->num < this->num){
         if(this->left == nullptr){
             this->left = node;
-//            node->parent = this;
         }else
             this->left->insert(node);
     }
     else{
         if(this->right == nullptr){
             this->right = node;
-//            node->parent = this;
         }else
             this->right->insert(node);
     }
@@ -48,13 +46,43 @@ bool Node::insert(Node *node){
 
 bool Node::remove(Node *node)
 {
-    if(left==nullptr && right==nullptr){
-        qDebug() << "Removed: Leaf";
-        delete(this);
-        return true;
+    if(node==nullptr) return false;
+
+    if(left!=nullptr && left==node){
+        if(left->isLeaf()){
+            qDebug() << "RemoveLeaf: " << left->num;
+            delete(left);
+
+            this->left = nullptr;
+            this->leftEdge = nullptr;
+
+            return true;
+        }
+        qDebug() << "Others: " << left->num;
+        return false;
     }
-    qDebug() << "Others:";
-    return true;
+    if(right!=nullptr && right==node){
+        if(right->isLeaf()){
+            qDebug() << "RemoveLeaf: " << right->num;
+            delete(right);
+
+            this->right = nullptr;
+            this->rightEdge = nullptr;
+
+            return true;
+        }
+        qDebug() << "Others: " << right->num;
+        return false;
+    }
+
+    // Recursive
+    if(left!=nullptr)
+        left->remove(node);
+
+    if(right!=nullptr)
+        right->remove(node);
+
+    return false;
 }
 
 void Node::print(){
@@ -67,8 +95,8 @@ void Node::print(){
 
 int Node::calcHeight(){
     // 葉のときに"0"になるように"-1"
-    return 1 + qMax(left==nullptr ? -1 : left->calcHeight(),
-                    right==nullptr? -1 : right->calcHeight());
+    return 1 + qMax(left ==nullptr ? -1 : left->calcHeight(),
+                    right==nullptr ? -1 : right->calcHeight());
 }
 
 bool Node::isEqual(Node *node)
@@ -115,4 +143,9 @@ Node *Node::getMax()
 {
     if(this->right==nullptr) return this;
     return this->right->getMax();
+}
+
+bool Node::isLeaf()
+{
+    return this->left==nullptr && this->right==nullptr;
 }

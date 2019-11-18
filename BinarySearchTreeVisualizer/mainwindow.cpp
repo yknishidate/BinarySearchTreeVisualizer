@@ -20,10 +20,6 @@ MainWindow::MainWindow(QWidget *parent) :
     view->setMinimumSize(400, 400);
     ui->gridLayout->addWidget(view);
 
-    // Setup TextEdit
-//    int fontWidth = QFontMetrics(ui->console->currentCharFormat().font()).averageCharWidth();
-//    ui->console->setTabStopWidth(4*fontWidth);
-
     tree = nullptr;
     firstRect = scene->sceneRect();
 
@@ -36,42 +32,17 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-
-
 void MainWindow::on_generateTreePushButton_clicked()
 {
     scene->clear();
     nums.clear();
 
     if(!processNumberSequence()) return;
-//    // Process Sequence
-//    QString str = ui->lineEdit->text();
-//    QStringList strList = str.split(" ");
-//    for (int i=0; i<strList.size(); i++){
-//        bool ok;
-//        int num = strList[i].toInt(&ok);
-//        if(ok)
-//            nums.append(num);
-//        else {
-//            printError("ERROR: Do not enter alphabets or symbols");
-//            return;
-//        }
-//    }
-
-//    if(nums.empty()){
-//        printError("ERROR: Number Sequence is empty");
-//        return;
-//    }
-//    printConsole("Number Sequence: ");
-//    printConsole(str, true);
-
     delete(tree);
     tree = new BinarySearchTree(nums);
     scene->drawTree(tree);
 
     view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
-//    qDebug() << scene->sceneRect();
 }
 
 void MainWindow::on_clearPushButton_clicked()
@@ -113,12 +84,12 @@ void MainWindow::on_insertNodePushButton_clicked()
 void MainWindow::deletePressed(bool arg)
 {
     // 派生クラスのポインタにキャスト
-    GraphicsCircle *circle = dynamic_cast<GraphicsCircle*>( scene->selectedItems()[0] );
-    qDebug() << "Delete Node(Main)" << circle->parent->num;
+    GraphicsCircle *selectedCircle = dynamic_cast<GraphicsCircle*>( scene->selectedItems()[0] );
+    Node *selectedNode = selectedCircle->parent;
+    qDebug() << "Delete Node(Main)" << selectedNode->num;
 
-//    if(circle && circle->parent)
-//        qDebug() << "getMax: " << circle->parent->getMax()->num;
-    circle->parent->remove(circle->parent);
+    tree->remove(selectedNode);
+    nums.removeOne(selectedNode->num);
 
     scene->clear();
     scene->drawTree(tree);

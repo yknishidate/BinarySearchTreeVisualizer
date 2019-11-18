@@ -8,6 +8,7 @@ BinarySearchTree::BinarySearchTree(const QList<int> n){
 }
 
 int BinarySearchTree::height(){
+    if(root==nullptr) return 0;
     return root->calcHeight();
 }
 
@@ -33,4 +34,9 @@ bool BinarySearchTree::exists(const QList<BinarySearchTree *> uniqueTrees){
     for(int i=0; i < uniqueTrees.size(); i++)
         if(*uniqueTrees[i] == *this) return true;
     return false;
+}
+
+bool BinarySearchTree::remove(Node *node)
+{
+    return root->remove(node);
 }

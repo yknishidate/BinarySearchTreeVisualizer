@@ -22,17 +22,16 @@ public:
     bool isAVL();
     bool exists(Node *node);
     Node *getMax();
+    bool isLeaf();
 
     // for Debug
     void print();
 
     // for Graphics
-//    Node *parent;
     QVector2D position;
     QGraphicsLineItem *edge;
     QGraphicsLineItem *leftEdge;
     QGraphicsLineItem *rightEdge;
-//    QGraphicsEllipseItem *circle;
     GraphicsCircle *circle;
     QGraphicsTextItem *number;
 

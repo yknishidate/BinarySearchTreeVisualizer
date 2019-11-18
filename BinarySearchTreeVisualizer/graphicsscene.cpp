@@ -15,6 +15,7 @@ GraphicsScene::GraphicsScene(QMenu *itemMenu, QObject *parent)
 
 void GraphicsScene::addNode(Node *node)
 {
+    if(node==nullptr) return;
     // Circle
     node->circle = new GraphicsCircle(0, 0, circleDiameter, circleDiameter);
     node->circle->setPos(node->position.x(), node->position.y());
@@ -105,6 +106,7 @@ void GraphicsScene::addEdge(Node *node)
 
 void GraphicsScene::drawTree(BinarySearchTree *tree)
 {
+    if(tree==nullptr) return;
     int height = tree->height();
     int space = (circleDiameter*1.1) * pow(2,height-1);
 
@@ -113,6 +115,8 @@ void GraphicsScene::drawTree(BinarySearchTree *tree)
 
 void GraphicsScene::drawNode(Node *node, int space)
 {
+    if(node==nullptr) return;
+
     addNode(node);
 //    addEdge(node);
     if(node->left != nullptr){

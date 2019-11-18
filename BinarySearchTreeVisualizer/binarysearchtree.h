@@ -15,6 +15,7 @@ public:
     bool operator==(const BinarySearchTree &tree);
     bool operator!=(const BinarySearchTree &tree);
     bool exists(const QList<BinarySearchTree*> uniqueTrees);
+    bool remove(Node *node);
 };
 
 #endif // BINARYSEARCHTREE_H
