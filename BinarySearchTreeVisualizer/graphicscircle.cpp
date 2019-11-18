@@ -10,7 +10,7 @@ GraphicsCircle::GraphicsCircle(qreal x, qreal y, qreal width, qreal height)
 void GraphicsCircle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton){
-        qDebug() << "Selected:" << this->parent->num;
+        qDebug() << "Selected(GraphicsCircle::mousePressEvent):" << this->parent->num;
     }
 }
 

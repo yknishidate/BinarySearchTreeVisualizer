@@ -13,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Setup GraphicsView
     scene = new GraphicsScene(itemMenu, this);
-//    view = new QGraphicsView(scene);
     view = new GraphicsView(scene);
     view->setRenderHint(QPainter::Antialiasing);
     view->setStyleSheet("QGraphicsView { background-color : #ffffff; }");
@@ -32,6 +31,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+////////// Generate //////////
 void MainWindow::on_generateTreePushButton_clicked()
 {
     scene->clear();
@@ -48,11 +48,27 @@ void MainWindow::on_generateTreePushButton_clicked()
     printConsole(tree->height(), true);
 }
 
+////////// Clear //////////
 void MainWindow::on_clearPushButton_clicked()
 {
-    clearAllData();
+    delete(view);
+    delete(scene);
+    delete(tree); tree = nullptr;
+    nums.clear();
+
+    scene = new GraphicsScene(itemMenu, this);
+    view = new GraphicsView(scene);
+    view->setRenderHint(QPainter::Antialiasing);
+    view->setStyleSheet("QGraphicsView { background-color : #ffffff; }");
+    view->setMinimumSize(400, 400);
+    ui->gridLayout->addWidget(view);
+
+    connect(view, SIGNAL(deletePressed(bool)), this, SLOT(deletePressed(bool)));
+
+    printConsole("--- Cleared ---", true);
 }
 
+////////// Save //////////
 void MainWindow::on_actionSave_triggered()
 {
     QPixmap pixMap = view->grab();
@@ -62,6 +78,7 @@ void MainWindow::on_actionSave_triggered()
     printConsole("Saved", true);
 }
 
+////////// Insert //////////
 void MainWindow::on_insertNodePushButton_clicked()
 {
     int number = ui->spinBox->value();
@@ -86,6 +103,7 @@ void MainWindow::on_insertNodePushButton_clicked()
     printConsole(tree->height(), true);
 }
 
+////////// Delete //////////
 void MainWindow::deletePressed(bool arg)
 {
     // 派生クラスのポインタにキャスト
@@ -100,27 +118,8 @@ void MainWindow::deletePressed(bool arg)
     scene->drawTree(tree);
 }
 
-void MainWindow::clearAllData()
-{
-    delete(view);
-    delete(scene);
-    delete(tree); tree = nullptr;
-    nums.clear();
-
-    scene = new GraphicsScene(itemMenu, this);
-//    view = new QGraphicsView(scene);
-    view = new GraphicsView(scene);
-    view->setRenderHint(QPainter::Antialiasing);
-    view->setStyleSheet("QGraphicsView { background-color : #ffffff; }");
-    view->setMinimumSize(400, 400);
-    ui->gridLayout->addWidget(view);
-
-    printConsole("--- Cleared ---", true);
-}
-
 bool MainWindow::processNumberSequence()
 {
-    // Process Sequence
     QString str = ui->lineEdit->text();
     QStringList strList = str.split(" ");
 

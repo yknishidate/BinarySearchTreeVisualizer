@@ -48,7 +48,9 @@ bool Node::remove(Node *node)
 {
     if(node==nullptr) return false;
 
+    // Delete Left
     if(left!=nullptr && left==node){
+        // Leaf
         if(left->isLeaf()){
             qDebug() << "RemoveLeaf: " << left->num;
             delete(left);
@@ -56,9 +58,10 @@ bool Node::remove(Node *node)
             leftEdge = nullptr;
             return true;
         }
+        // 1 Child
         if(left->hasOneChild()){
             if(left->left!=nullptr){
-                qDebug() << "RemoveNode(hasLeft): " << left->num;
+                qDebug() << "RemoveNode(hasLeft) : " << left->num;
                 Node *tmp = left;
                 left = left->left;
                 delete(tmp);
@@ -77,6 +80,8 @@ bool Node::remove(Node *node)
         qDebug() << "Others: " << left->num;
         return false;
     }
+
+    // Delete Right
     if(right!=nullptr && right==node){
         if(right->isLeaf()){
             qDebug() << "RemoveLeaf: " << right->num;

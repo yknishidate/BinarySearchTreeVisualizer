@@ -36,7 +36,35 @@ bool BinarySearchTree::exists(const QList<BinarySearchTree *> uniqueTrees){
     return false;
 }
 
-bool BinarySearchTree::remove(Node *node)
+bool BinarySearchTree::remove(Node *target)
 {
-    return root->remove(node);
+        return root->remove(target);
+//    qDebug() << "RemoveCalled: ";
+//    return remove(root, target, nullptr, true);
+}
+
+bool BinarySearchTree::remove(Node *node, Node *target, Node *parent, bool left)
+{
+    if(node==nullptr || target==nullptr) return false;
+
+    if(node==target){
+        if(node->isLeaf()){
+            qDebug() << "RemoveLeaf: " << node->num;
+            delete(node);
+            node = nullptr;
+//            delete(target);
+            if(parent!=nullptr){
+                if(left) parent->left = nullptr;
+                else parent->right = nullptr;
+            }
+            return true;
+        }
+        qDebug() << "Others: " << node->num;
+        return true;
+    }
+
+    if(node->left!=nullptr)
+        return remove(node->left, target, node, true);
+    if(node->right!=nullptr)
+        return remove(node->right, target, node, false);
 }

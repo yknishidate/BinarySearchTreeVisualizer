@@ -35,7 +35,6 @@ public:
 
     template <class T> void printConsole(T arg, bool br = false);
     void printError(QString arg);
-    void clearAllData();
     bool processNumberSequence();
 
 private slots:
@@ -53,7 +52,6 @@ private:
     Ui::MainWindow *ui;
     QMenu *itemMenu;
     GraphicsScene *scene;
-//    QGraphicsView *view;
     GraphicsView *view;
     BinarySearchTree* tree;
     QRectF firstRect;
