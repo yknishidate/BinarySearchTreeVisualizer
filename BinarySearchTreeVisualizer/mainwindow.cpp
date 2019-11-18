@@ -43,6 +43,9 @@ void MainWindow::on_generateTreePushButton_clicked()
     scene->drawTree(tree);
 
     view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+
+    printConsole("TreeHeight: ");
+    printConsole(tree->height(), true);
 }
 
 void MainWindow::on_clearPushButton_clicked()
@@ -77,8 +80,10 @@ void MainWindow::on_insertNodePushButton_clicked()
     scene->drawTree(tree);
     view->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
 
-    printConsole("Inserted: ");
+    printConsole("Inserted  : ");
     printConsole(number, true);
+    printConsole("TreeHeight: ");
+    printConsole(tree->height(), true);
 }
 
 void MainWindow::deletePressed(bool arg)
@@ -110,7 +115,7 @@ void MainWindow::clearAllData()
     view->setMinimumSize(400, 400);
     ui->gridLayout->addWidget(view);
 
-    printConsole("Cleared", true);
+    printConsole("--- Cleared ---", true);
 }
 
 bool MainWindow::processNumberSequence()

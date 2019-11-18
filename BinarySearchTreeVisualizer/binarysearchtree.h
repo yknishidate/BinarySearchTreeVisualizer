@@ -11,11 +11,13 @@ public:
     Node* getRoot(){return root;}
     int height();
     bool isAVL();
-    void print();
     bool operator==(const BinarySearchTree &tree);
     bool operator!=(const BinarySearchTree &tree);
     bool exists(const QList<BinarySearchTree*> uniqueTrees);
     bool remove(Node *node);
+
+    // for Debug
+    void print();
 };
 
 #endif // BINARYSEARCHTREE_H

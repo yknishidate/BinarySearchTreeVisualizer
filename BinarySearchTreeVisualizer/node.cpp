@@ -52,11 +52,27 @@ bool Node::remove(Node *node)
         if(left->isLeaf()){
             qDebug() << "RemoveLeaf: " << left->num;
             delete(left);
-
-            this->left = nullptr;
-            this->leftEdge = nullptr;
-
+            left = nullptr;
+            leftEdge = nullptr;
             return true;
+        }
+        if(left->hasOneChild()){
+            if(left->left!=nullptr){
+                qDebug() << "RemoveNode(hasLeft): " << left->num;
+                Node *tmp = left;
+                left = left->left;
+                delete(tmp);
+                tmp = nullptr;
+                return true;
+            }
+            if(left->right!=nullptr){
+                qDebug() << "RemoveNode(hasLeft): " << left->num;
+                Node *tmp = left;
+                left = left->right;
+                delete(tmp);
+                tmp = nullptr;
+                return true;
+            }
         }
         qDebug() << "Others: " << left->num;
         return false;
@@ -65,11 +81,27 @@ bool Node::remove(Node *node)
         if(right->isLeaf()){
             qDebug() << "RemoveLeaf: " << right->num;
             delete(right);
-
-            this->right = nullptr;
-            this->rightEdge = nullptr;
-
+            right = nullptr;
+            rightEdge = nullptr;
             return true;
+        }
+        if(right->hasOneChild()){
+            if(right->left!=nullptr){
+                qDebug() << "RemoveNode(hasRight): " << right->num;
+                Node *tmp = right;
+                right = right->left;
+                delete(tmp);
+                tmp = nullptr;
+                return true;
+            }
+            if(left->right!=nullptr){
+                qDebug() << "RemoveNode(hasRight): " << right->num;
+                Node *tmp = right;
+                right = right->right;
+                delete(tmp);
+                tmp = nullptr;
+                return true;
+            }
         }
         qDebug() << "Others: " << right->num;
         return false;
@@ -94,9 +126,8 @@ void Node::print(){
 }
 
 int Node::calcHeight(){
-    // 葉のときに"0"になるように"-1"
-    return 1 + qMax(left ==nullptr ? -1 : left->calcHeight(),
-                    right==nullptr ? -1 : right->calcHeight());
+    return qMax(left ==nullptr ? 0 : 1 + left->calcHeight(),
+                right==nullptr ? 0 : 1 + right->calcHeight());
 }
 
 bool Node::isEqual(Node *node)
@@ -121,8 +152,8 @@ bool Node::isEqual(Node *node)
 
 bool Node::isAVL()
 {
-    int dif = abs(  (left ==nullptr ? 0 : 1+left->calcHeight())
-                   -(right==nullptr ? 0 : 1+right->calcHeight()) );
+    int dif = abs(  (left ==nullptr ? 0 : 1 + left->calcHeight())
+                   -(right==nullptr ? 0 : 1 + right->calcHeight()) );
     bool t=(dif<=1), l=true, r=true;
     if(this->left != nullptr)   left->isAVL();
     if(this->right != nullptr)  right->isAVL();
@@ -148,4 +179,14 @@ Node *Node::getMax()
 bool Node::isLeaf()
 {
     return this->left==nullptr && this->right==nullptr;
+}
+
+bool Node::hasOneChild()
+{
+    return this->left==nullptr ^ this->right==nullptr;
+}
+
+bool Node::hasTwoChild()
+{
+    return this->left!=nullptr && this->right!=nullptr;
 }
