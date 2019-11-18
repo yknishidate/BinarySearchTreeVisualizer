@@ -38,9 +38,25 @@ bool BinarySearchTree::exists(const QList<BinarySearchTree *> uniqueTrees){
 
 bool BinarySearchTree::remove(Node *target)
 {
-        return root->remove(target);
-//    qDebug() << "RemoveCalled: ";
-//    return remove(root, target, nullptr, true);
+    if(root == target){
+        if(root->isLeaf()){
+            return false;
+        }
+        else if(root->hasOneChild()){
+            root = (root->left!=nullptr) ? root->left
+                                         : root->right;
+        }
+        else{
+            Node *maxParent = root->left->getMaxParent();
+            Node *max = root->left->getMax();
+            qDebug() << "MaxNode:" << max->num;
+            qDebug() << "MaxPare:" << maxParent->num;
+            Node *tmpL = root->left;
+            Node *tmpR = root->right;
+        }
+    }
+
+    return root->remove(target);
 }
 
 bool BinarySearchTree::remove(Node *node, Node *target, Node *parent, bool left)

@@ -115,6 +115,12 @@
             <height>0</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <family>Consolas</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
          </widget>
         </item>
         <item>
@@ -173,6 +179,12 @@
             <width>150</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Consolas</family>
+            <pointsize>10</pointsize>
+           </font>
           </property>
           <property name="minimum">
            <number>-99</number>

@@ -78,8 +78,16 @@ bool Node::remove(Node *node)
             }
         }
         else{
-            Node *maxParent = left->getMaxParent();
-            Node *max = left->getMax();
+            Node *maxParent = left->left->getMaxParent();
+            Node *max = left->left->getMax();
+            if(max == maxParent){
+                Node *tmp = this->left;
+                this->left = max;
+                max->right = tmp->right;
+                delete(tmp);
+                tmp = nullptr;
+                return true;
+            }
             qDebug() << "MaxNode:" << max->num;
             qDebug() << "MaxPare:" << maxParent->num;
             Node *tmpL = this->left->left;
@@ -133,8 +141,16 @@ bool Node::remove(Node *node)
             }
         }
         else{
-            Node *maxParent = right->getMaxParent();
-            Node *max = right->getMax();
+            Node *maxParent = right->left->getMaxParent();
+            Node *max = right->left->getMax();
+            if(max == maxParent){
+                Node *tmp = this->right;
+                this->right = max;
+                max->right = tmp->right;
+                delete(tmp);
+                tmp = nullptr;
+                return true;
+            }
             qDebug() << "MaxNode:" << max->num;
             qDebug() << "MaxPare:" << maxParent->num;
             Node *tmpL = this->right->left;
