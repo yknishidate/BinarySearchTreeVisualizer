@@ -7,7 +7,11 @@ class BinarySearchTree {
 public:
     Node *root;
     QList<int> nums;
+
     BinarySearchTree(const QList<int> n);
+    ~BinarySearchTree();
+    void deleteAllNodes(Node *node);
+
     Node* getRoot(){return root;}
     int height();
     bool isAVL();

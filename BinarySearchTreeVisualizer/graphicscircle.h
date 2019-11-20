@@ -12,6 +12,8 @@ class GraphicsCircle : public QGraphicsEllipseItem
 {
 public:
     GraphicsCircle(qreal x, qreal y, qreal width, qreal height);
+    ~GraphicsCircle();
+
     Node *parent;
 
 protected:

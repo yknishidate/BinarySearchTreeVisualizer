@@ -7,6 +7,11 @@ GraphicsCircle::GraphicsCircle(qreal x, qreal y, qreal width, qreal height)
 
 }
 
+GraphicsCircle::~GraphicsCircle()
+{
+    qDebug() << "GraphicsCircle deleted";
+}
+
 void GraphicsCircle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton){

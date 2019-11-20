@@ -7,6 +7,19 @@ BinarySearchTree::BinarySearchTree(const QList<int> n){
         root->insert(new Node(nums[i]));
 }
 
+BinarySearchTree::~BinarySearchTree()
+{
+    qDebug() << "BST deleted";
+    deleteAllNodes(root);
+}
+
+void BinarySearchTree::deleteAllNodes(Node *node)
+{
+    if(node->left != nullptr)deleteAllNodes(node->left);
+    if(node->right != nullptr)deleteAllNodes(node->right);
+    delete(node);
+}
+
 int BinarySearchTree::height(){
     if(root==nullptr) return 0;
     return root->calcHeight();

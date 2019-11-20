@@ -13,6 +13,8 @@ public:
     Node *left, *right;
 
     Node(int num);
+    ~Node();
+
     bool operator==(const Node &node);
     bool operator!=(const Node &node);
     bool insert(Node *node);
@@ -36,9 +38,7 @@ public:
 
     // for Graphics
     QVector2D position;
-//    QGraphicsLineItem *edge;
-//    QGraphicsLineItem *leftEdge;
-//    QGraphicsLineItem *rightEdge;
+    QList<QGraphicsLineItem*> edge;
     GraphicsCircle *circle;
     QGraphicsTextItem *number;
 

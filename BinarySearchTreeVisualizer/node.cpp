@@ -6,6 +6,11 @@ Node::Node(int num){
     position = QVector2D(0, 0);
 }
 
+Node::~Node()
+{
+    qDebug() << "Node deleted";
+}
+
 bool Node::operator==(const Node &node){
     bool t = (num == node.num), l, r;
     if(left!=nullptr && node.left!=nullptr)
