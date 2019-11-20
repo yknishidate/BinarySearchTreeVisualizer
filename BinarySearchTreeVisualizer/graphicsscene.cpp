@@ -59,8 +59,6 @@ void GraphicsScene::addEdge(Node *nodeA, Node *nodeB)
     QGraphicsLineItem *edge = new QGraphicsLineItem(a.x(), a.y(), b.x(), b.y());
     edge->setPen(pen);
     this->addItem(edge);
-
-    nodeA->edge.append(edge);
 }
 
 void GraphicsScene::drawTree(BinarySearchTree *tree)

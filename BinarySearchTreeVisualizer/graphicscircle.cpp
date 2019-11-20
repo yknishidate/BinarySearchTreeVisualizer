@@ -9,7 +9,7 @@ GraphicsCircle::GraphicsCircle(qreal x, qreal y, qreal width, qreal height)
 
 GraphicsCircle::~GraphicsCircle()
 {
-    qDebug() << "GraphicsCircle deleted";
+//    qDebug() << "GraphicsCircle deleted";
 }
 
 void GraphicsCircle::mousePressEvent(QGraphicsSceneMouseEvent *event)

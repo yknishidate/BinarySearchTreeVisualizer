@@ -19,7 +19,6 @@ public:
     bool operator!=(const Node &node);
     bool insert(Node *node);
     bool remove(Node *node);
-
     int  calcHeight();
     bool isEqual(Node *node);
     bool isAVL();
@@ -31,14 +30,12 @@ public:
     Node *getMaxParent();
     bool isLeaf();
     bool hasOneChild();
-    bool hasTwoChild();
 
     // for Debug
     void print();
 
     // for Graphics
     QVector2D position;
-    QList<QGraphicsLineItem*> edge;
     GraphicsCircle *circle;
     QGraphicsTextItem *number;
 

@@ -28,23 +28,15 @@ bool Node::operator!=(const Node &node){return !(*this==node);}
 
 bool Node::insert(Node *node){
     if(node==nullptr) return false;
-
-    if(exists(node)){
-        qDebug() << node->num << "is already exists.";
-        return false;
-    }
+    if(exists(node))  return false;
 
     if(node->num < this->num){
-        if(this->left == nullptr){
-            this->left = node;
-        }else
-            this->left->insert(node);
+        if(this->left == nullptr) this->left = node;
+        else                      this->left->insert(node);
     }
     else{
-        if(this->right == nullptr){
-            this->right = node;
-        }else
-            this->right->insert(node);
+        if(this->right == nullptr) this->right = node;
+        else                       this->right->insert(node);
     }
     return true;
 }
@@ -263,7 +255,3 @@ bool Node::hasOneChild()
     return this->left==nullptr ^ this->right==nullptr;
 }
 
-bool Node::hasTwoChild()
-{
-    return this->left!=nullptr && this->right!=nullptr;
-}

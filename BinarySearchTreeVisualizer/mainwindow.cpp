@@ -105,6 +105,8 @@ void MainWindow::on_insertNodePushButton_clicked()
 ////////// Delete //////////
 void MainWindow::deletePressed(bool arg)
 {
+    if(scene->selectedItems().isEmpty()) return;
+
     // 派生クラスのポインタにキャスト
     GraphicsCircle *selectedCircle = dynamic_cast<GraphicsCircle*>( scene->selectedItems()[0] );
     Node *selectedNode = selectedCircle->parent;

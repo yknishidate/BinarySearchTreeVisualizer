@@ -19,6 +19,7 @@ public:
     bool operator!=(const BinarySearchTree &tree);
     bool exists(const QList<BinarySearchTree*> uniqueTrees);
     bool remove(Node *target);
+    bool remove(Node *node, Node *target, Node *parent, bool isLeft);
 
     // for Debug
     void print();

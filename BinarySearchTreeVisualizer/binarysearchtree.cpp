@@ -80,5 +80,79 @@ bool BinarySearchTree::remove(Node *target)
 //        }
     }
 
-    return root->remove(target);
+//    return root->remove(target);
+    return remove(root, target, nullptr, true);
+}
+
+bool BinarySearchTree::remove(Node *node, Node *target, Node *parent, bool isLeft)
+{
+    if(node == target){
+        // Target is Leaf
+        if(target->isLeaf()){
+            qDebug() << "Target is Leaf";
+            if(parent != nullptr){
+                if(isLeft) parent->left = nullptr;
+                else       parent->right = nullptr;
+            }
+            delete(target);
+            return true;
+        }
+        // Target has 1 child
+        else if(target->hasOneChild()){
+            qDebug() << "Target has 1 child";
+            if(parent != nullptr){
+                // Target is Parent's Left
+                if(isLeft) {
+                    if(target->left != nullptr) // "/"
+                        parent->left = target->left;
+                    else                        // "<"
+                        parent->left = target->right;
+                }
+                // Target is Parent's Right
+                else {
+                    if(target->left != nullptr) // ">"
+                        parent->right = target->left;
+                    else                        // "\"
+                        parent->right = target->right;
+                }
+            }
+            delete(target);
+            return true;
+        }
+        // Target has 2 children
+        else{
+            qDebug() << "Target has 2 children";
+            Node *maxParent = target->left->getMaxParent();
+            Node *max = target->left->getMax();
+            Node *tmpL = target->left;
+            Node *tmpR = target->right;
+            if(max == maxParent){
+                max->right = tmpR;
+                if(isLeft){
+                    parent->left = max;
+                }
+                else{
+                    parent->right = max;
+                }
+                delete(target);
+                return true;
+            }
+            // Remove Max
+            if(maxParent->right!=nullptr)
+                maxParent->right = nullptr;
+            // Setup Children
+            max->left = tmpL;
+            max->right = tmpR;
+            // Replace with Max
+            if(isLeft) parent->left = max;
+            else       parent->right = max;
+            delete(target);
+            return true;
+        }
+    }
+    if(node->left != nullptr)
+        remove(node->left, target, node, true);
+    if(node->right != nullptr)
+        remove(node->right, target, node, false);
+    return true;
 }
