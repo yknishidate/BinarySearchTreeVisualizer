@@ -50,34 +50,54 @@ bool BinarySearchTree::exists(const QList<BinarySearchTree *> uniqueTrees){
 
 bool BinarySearchTree::remove(Node *target)
 {
-    // Root
+    // Target is Root
     if(root == target){
-        return false;
-//        if(root->isLeaf()){
-//            return false;
-//        }
-//        else if(root->hasOneChild()){
-//            root = (root->left!=nullptr) ? root->left
-//                                         : root->right;
-//            return true;
-//        }
-//        else{
-//            Node *maxParent = root->left->getMaxParent();
-//            Node *max = root->left->getMax();
+        qDebug() << "Target is Root";
+        if(target->isLeaf()){
+            qDebug() << "You cannot delete last node";
+            return false;
+        }
+        else if(root->hasOneChild()){
+            qDebug() << "Root has 1 Child";
+            QVector2D rootPos = root->position;
+            if(root->left != nullptr)
+                root = root->left;
+            else
+                root = root->right;
 
-//            qDebug() << "MaxNode:" << max->num;
-//            qDebug() << "MaxPare:" << maxParent->num;
-//            max->left  = root->left;
-//            max->right = root->right;
-//            // Remove Max
-//            if(maxParent->right!=nullptr)
-//                maxParent->right = nullptr;
-//            // Replace with Max
-//            root = max;
-//            delete(target);
-//            target = nullptr;
-//            return true;
-//        }
+            root->position = rootPos;
+            delete(target);
+            return true;
+        }
+        else{
+            qDebug() << "Root has 2 children";
+            QVector2D rootPos = root->position;
+
+            Node *maxParent = target->left->getMaxParent();
+            Node *max = target->left->getMax();
+            Node *tmpL = target->left;
+            Node *tmpR = target->right;
+            if(max == maxParent){
+                max->right = tmpR;
+                root = max;
+
+                root->position = rootPos;
+                delete(target);
+                return true;
+            }
+            // Remove Max
+            if(maxParent->right!=nullptr)
+                maxParent->right = nullptr;
+            // Setup Children
+            max->right = tmpR;
+            max->left = tmpL;
+            // Replace with Max
+            root = max;
+
+            root->position = rootPos;
+            delete(target);
+            return true;
+        }
     }
 
     return remove(root, target, nullptr, true);

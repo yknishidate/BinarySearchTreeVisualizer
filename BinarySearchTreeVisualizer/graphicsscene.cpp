@@ -67,7 +67,8 @@ void GraphicsScene::drawTree(BinarySearchTree *tree)
     int height = tree->height();
     int space = (circleDiameter*1.1) * pow(2,height-1);
 
-    drawNode(tree->getRoot(), space);
+    if(tree->root != nullptr)
+        drawNode(tree->root, space);
 }
 
 void GraphicsScene::drawNode(Node *node, int space)
