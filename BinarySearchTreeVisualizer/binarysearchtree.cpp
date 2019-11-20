@@ -80,7 +80,6 @@ bool BinarySearchTree::remove(Node *target)
 //        }
     }
 
-//    return root->remove(target);
     return remove(root, target, nullptr, true);
 }
 

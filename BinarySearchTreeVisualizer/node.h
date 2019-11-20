@@ -18,7 +18,6 @@ public:
     bool operator==(const Node &node);
     bool operator!=(const Node &node);
     bool insert(Node *node);
-    bool remove(Node *node);
     int  calcHeight();
     bool isEqual(Node *node);
     bool isAVL();
