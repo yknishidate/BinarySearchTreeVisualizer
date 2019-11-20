@@ -20,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->gridLayout->addWidget(view);
 
     tree = nullptr;
-    firstRect = scene->sceneRect();
 
     // Connect
     connect(view, SIGNAL(deletePressed(bool)), this, SLOT(deletePressed(bool)));

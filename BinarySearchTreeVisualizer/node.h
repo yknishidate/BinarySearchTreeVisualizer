@@ -36,9 +36,9 @@ public:
 
     // for Graphics
     QVector2D position;
-    QGraphicsLineItem *edge;
-    QGraphicsLineItem *leftEdge;
-    QGraphicsLineItem *rightEdge;
+//    QGraphicsLineItem *edge;
+//    QGraphicsLineItem *leftEdge;
+//    QGraphicsLineItem *rightEdge;
     GraphicsCircle *circle;
     QGraphicsTextItem *number;
 

@@ -55,7 +55,6 @@ bool Node::remove(Node *node)
             qDebug() << "RemoveLeaf: " << left->num;
             delete(left);
             left = nullptr;
-            leftEdge = nullptr;
             return true;
         }
         // 1 Child
@@ -119,7 +118,6 @@ bool Node::remove(Node *node)
             qDebug() << "RemoveLeaf: " << right->num;
             delete(right);
             right = nullptr;
-            rightEdge = nullptr;
             return true;
         }
         else if(right->hasOneChild()){

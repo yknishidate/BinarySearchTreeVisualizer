@@ -43,44 +43,21 @@ void GraphicsScene::addNode(Node *node)
     addItem(node->circle);
 }
 
-void GraphicsScene::addLeftEdge(Node *node)
+void GraphicsScene::addEdge(Node *nodeA, Node *nodeB)
 {
-    if(node==nullptr || node->left==nullptr) return;
+    if(nodeA==nullptr || nodeB==nullptr) return;
+    QVector2D a((nodeA->position.x()+circleDiameter/2), (nodeA->position.y()+circleDiameter/2));
+    QVector2D b((nodeB->position.x()+circleDiameter/2), (nodeB->position.y()+circleDiameter/2));
 
-    QVector2D a((node->position.x()+circleDiameter/2), (node->position.y()+circleDiameter/2));
-    QVector2D b((node->left->position.x()+circleDiameter/2), (node->left->position.y()+circleDiameter/2));
-
-    float dx = (node->left->position.x()) - (node->position.x());
-    float dy = (node->left->position.y()) - (node->position.y());
-    QVector2D dir(dx, dy);
+    QVector2D dir = b-a;
     dir.normalize();
 
     a += dir*circleDiameter/2;
     b -= dir*circleDiameter/2;
 
-    node->leftEdge = new QGraphicsLineItem(a.x(), a.y(), b.x(), b.y());
-    node->leftEdge->setPen(pen);
-    this->addItem(node->leftEdge);
-}
-
-void GraphicsScene::addRightEdge(Node *node)
-{
-    if(node==nullptr || node->right==nullptr) return;
-
-    QVector2D a((node->position.x()+circleDiameter/2), (node->position.y()+circleDiameter/2));
-    QVector2D b((node->right->position.x()+circleDiameter/2), (node->right->position.y()+circleDiameter/2));
-
-    float dx = (node->right->position.x()) - (node->position.x());
-    float dy = (node->right->position.y()) - (node->position.y());
-    QVector2D dir(dx, dy);
-    dir.normalize();
-
-    a += dir*circleDiameter/2;
-    b -= dir*circleDiameter/2;
-
-    node->rightEdge = new QGraphicsLineItem(a.x(), a.y(), b.x(), b.y());
-    node->rightEdge->setPen(pen);
-    this->addItem(node->rightEdge);
+    QGraphicsLineItem *edge = new QGraphicsLineItem(a.x(), a.y(), b.x(), b.y());
+    edge->setPen(pen);
+    this->addItem(edge);
 }
 
 void GraphicsScene::drawTree(BinarySearchTree *tree)
@@ -100,12 +77,12 @@ void GraphicsScene::drawNode(Node *node, int space)
     if(node->left != nullptr){
         node->left->position = QVector2D(node->position.x()-space/2, node->position.y()+stepHeight);
         drawNode(node->left, space/2);
-        addLeftEdge(node);
+        addEdge(node, node->left);
     }
     if(node->right != nullptr){
         node->right->position = QVector2D(node->position.x()+space/2, node->position.y()+stepHeight);
         drawNode(node->right, space/2);
-        addRightEdge(node);
+        addEdge(node, node->right);
     }
 }
 
