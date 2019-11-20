@@ -9,6 +9,6 @@ GraphicsView::GraphicsView(GraphicsScene *scene)
 void GraphicsView::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Delete){
-        emit deletePressed(true);
+        emit deletePressed();
     }
 }

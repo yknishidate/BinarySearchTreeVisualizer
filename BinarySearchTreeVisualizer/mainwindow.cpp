@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     tree = nullptr;
 
     // Connect
-    connect(view, SIGNAL(deletePressed(bool)), this, SLOT(deletePressed(bool)));
+    connect(view, SIGNAL(deletePressed()), this, SLOT(deletePressed()));
 }
 
 MainWindow::~MainWindow()
@@ -62,7 +62,7 @@ void MainWindow::on_clearPushButton_clicked()
     view->setMinimumSize(400, 400);
     ui->gridLayout->addWidget(view);
 
-    connect(view, SIGNAL(deletePressed(bool)), this, SLOT(deletePressed(bool)));
+    connect(view, SIGNAL(deletePressed()), this, SLOT(deletePressed()));
 
     printConsole("--- Cleared ---", true);
 }
@@ -103,7 +103,7 @@ void MainWindow::on_insertNodePushButton_clicked()
 }
 
 ////////// Delete //////////
-void MainWindow::deletePressed(bool arg)
+void MainWindow::deletePressed()
 {
     if(scene->selectedItems().isEmpty()) return;
 

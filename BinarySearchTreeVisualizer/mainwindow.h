@@ -46,7 +46,7 @@ private slots:
 
     void on_insertNodePushButton_clicked();
 
-    void deletePressed(bool arg);
+    void deletePressed();
 
 private:
     Ui::MainWindow *ui;

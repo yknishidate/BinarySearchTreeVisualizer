@@ -14,7 +14,7 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 
 signals:
-    void deletePressed(bool arg);
+    void deletePressed();
 };
 
 #endif // GRAPHICSVIEW_H
