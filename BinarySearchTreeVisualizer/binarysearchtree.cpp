@@ -86,8 +86,7 @@ bool BinarySearchTree::remove(Node *target)
                 return true;
             }
             // Remove Max
-            if(maxParent->right!=nullptr)
-                maxParent->right = nullptr;
+            maxParent->right = max->left;
             // Setup Children
             max->right = tmpR;
             max->left = tmpL;
@@ -143,6 +142,7 @@ bool BinarySearchTree::remove(Node *node, Node *target, Node *parent, bool isLef
             qDebug() << "Target has 2 children";
             Node *maxParent = target->left->getMaxParent();
             Node *max = target->left->getMax();
+            Node *maxLeft = max->left;
             Node *tmpL = target->left;
             Node *tmpR = target->right;
             if(max == maxParent){
@@ -157,8 +157,7 @@ bool BinarySearchTree::remove(Node *node, Node *target, Node *parent, bool isLef
                 return true;
             }
             // Remove Max
-            if(maxParent->right!=nullptr)
-                maxParent->right = nullptr;
+            maxParent->right = max->left;
             // Setup Children
             max->left = tmpL;
             max->right = tmpR;
